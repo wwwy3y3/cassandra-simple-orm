@@ -1,0 +1,23 @@
+# OS gernerate files #
+######################
+
+.DS_Store
+.idea
+*.swp
+*.swo
+.cache
+
+# node_modules #
+################
+
+node_modules
+
+# log files #
+#############
+
+npm-debug.log
+
+# sublime default #
+#############
+*.sublime-project
+*.sublime-workspace
