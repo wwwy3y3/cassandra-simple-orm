@@ -19,18 +19,19 @@
 	    .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
 
 ###where有很多用法, 有≥, > , =, ≤, <
-*等於 eql:  	`where({age: 20})` or `where({age: {eql: 20}})`
-*大於 gt:  	`where({age: {gt: 20} })` 
-*小於 lt:  	`where({age: {lt: 20} })` 
-*大於等於 gte:  	`where({age: {gte: 20} })` 
-*小於等於 lte:  	`where({age: {lte: 20} })` 
+
+*	等於 eql:  	`where({age: 20})` or `where({age: {eql: 20}})`
+*	大於 gt:  	`where({age: {gt: 20} })` 
+*	小於 lt:  	`where({age: {lt: 20} })` 
+*	大於等於 gte:  	`where({age: {gte: 20} })` 
+*	小於等於 lte:  	`where({age: {lte: 20} })` 
 
 
 ##最後要執行query 就用exec()
 	cass.cf("club").get(["name", "thumb"]).exec(function(err, results){
 		//..
 		});
-		
+
 ##get
 ###get all from user
 	cass.cf("user").get("*").exec(function (err, results) {
