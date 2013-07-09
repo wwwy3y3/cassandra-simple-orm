@@ -1,13 +1,10 @@
 {
   "name": "cassandra-simple-orm",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "wwwy3y3 <wwwy3y3@gmail.com>",
   "description": "a simple CRUD orm for cassandra helenus",
   "contributors": [
-    {
-      "name": "william chang",
-      "email": "wwwy3y3@gmail.com"
-    }
+    "william chang <wwwy3y3@gmail.com>"
   ],
   "keywords": [
     "orm",
@@ -22,5 +19,19 @@
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wwwy3y3/cassandra-simple-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wwwy3y3/cassandra-simple-orm/issues"
   }
 }

@@ -1,103 +1,129 @@
 var Cass= require("../index");
 var helenus= require("helenus");
+var uuid= require("node-uuid");
 var should= require("should");
 
 describe('Select', function(){
-  describe('#get all', function(){
+  describe('#get', function(){
   	var cass= new Cass();
-    it('should get all user, test uuid key', function(done){
+    it('should get all user, return a object', function(done){
       
-      cass.cf("user").get("*").exec(function (err, results) {
+      cass.cf("user").get("*")
+      	  .toObj()
+      	  .exec(function (err, results) {
       	if(err) throw err;
-      	results.forEach(function(row){
-		  	console.log(helenus.TimeUUID.fromBinary(row.key));
-		});
+      	console.log(results);
 		done();
       })
     })
-  })
 
-  describe('#get Selected columns', function(){
-  	var cass= new Cass();
-    it('should get selected columns', function(done){
+    it('should get one user, return a object', function(done){
       
-      cass.cf("club").get(["name", "thumb"]).exec(function (err, results) {
+      cass.clear().cf("user").first("*")
+      	  .where({account: "li.bear@ymail.com"})
+      	  .toObj()
+      	  .exec(function (err, results) {
       	if(err) throw err;
-      	results.forEach(function(row){
-      		var obj= {};
-		  	row.forEach(function(name,value,ts,ttl){
-			    //all column of row
-			    obj[name]= value;
-			  });
-		  	console.log(obj);
-		});
+      	console.log(results);
 		done();
       })
     })
-  })
 
-  describe('#get Selected columns where key=?', function(){
-  	var cass= new Cass();
+    it('should get club members, return array', function(done){
+      
+      cass.clear().cf("club_member").getCols("*")
+      	  .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
+      	  .toArray()
+      	  .exec(function (err, results) {
+      	if(err) throw err;
+      	console.log(results);
+		done();
+      })
+    })
+
+    it('should get club apps, return obj', function(done){
+      
+      cass.clear().cf("club_apps").get("*")
+      	  .where({key: "a8d166a0-8e11-11e2-94a1-31a36788c8a5"})
+      	  .toObj()
+      	  .exec(function (err, results) {
+      	if(err) throw err;
+      	console.log(results);
+		done();
+      })
+    })
+
+    it('should get club apps, return obj', function(done){
+      
+      cass.clear().cf("club_apps").get("*")
+      	  .where({key: "a8d166a0-8e11-11e2-94a1-31a36788c8a5"})
+      	  .toObj()
+      	  .exec(function (err, results) {
+      	if(err) throw err;
+      	console.log(results);
+		done();
+      })
+    })
+
     it('should get selected columns', function(done){
       
-      cass.cf("club").get(["name", "thumb"])
+      cass.clear().cf("club").get(["name", "thumb"])
       	  .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
       	  .exec(function (err, results) {
 	      	if(err) throw err;
-	      	results.forEach(function(row){
-	      		var obj= {};
-			  	row.forEach(function(name,value,ts,ttl){
-				    //all column of row
-				    obj[name]= value;
-				  });
-			  	console.log(obj);
-			});
+	      	console.log(results);
 			done();
 	      })
     })
+
+    it('should get selected columns, return original rows object', function(done){
+      cass.clear().cf("club").get(["name", "thumb"])
+      	  .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
+      	  .exec(function (err, results) {
+	      	if(err) throw err;
+	      	console.log(results);
+			done();
+	      })
   })
 
-  describe('#get Selected columns where second index equals to ?', function(){
-  	var cass= new Cass();
-    it('should get selected columns', function(done){
+    it('should get selected columns, return object', function(done){
+      cass.clear().cf("club").get(["name", "thumb"])
+      	  .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
+      	  .toObj()
+      	  .exec(function (err, results) {
+	      	if(err) throw err;
+	      	console.log(results);
+			done();
+	      })
+  })
+
+    it('should get selected columns, return object', function(done){
       
-      cass.cf("club").get(["name", "thumb"])
+      cass.clear().cf("club").get(["name", "thumb"])
       	  .where({url: {eql: "123123"}})
+      	  .toObj()
       	  .exec(function (err, results) {
 	      	if(err) throw err;
-	      	results.forEach(function(row){
-	      		var obj= {};
-			  	row.forEach(function(name,value,ts,ttl){
-				    //all column of row
-				    obj[name]= value;
-				  });
-			  	console.log(obj);
-			});
+	      	console.log(results);
 			done();
 	      })
     })
+
+    it('should get selected columns where key in, return array', function(done){
+      
+      cass.clear().cf("user").get(["name", "thumb"])
+      	  .where({key: {in: ["0aacb3b0-c51d-11e2-b9de-1b8643031865", "07e002a0-8e08-11e2-9bcf-033be9f2a618"]}})
+      	  .toArray()
+      	  .exec(function (err, results) {
+	      	if(err) throw err;
+	      	console.log(results);
+			done();
+	      })
+    })
+
   })
 
-  describe('#get Selected columns where key in', function(){
-  	var cass= new Cass();
-    it('should get selected columns', function(done){
-      
-      cass.cf("user").get(["name", "thumb"])
-      	  .where({key: {in: ["0aacb3b0-c51d-11e2-b9de-1b8643031865", "07e002a0-8e08-11e2-9bcf-033be9f2a618"]}})
-      	  .exec(function (err, results) {
-	      	if(err) throw err;
-	      	results.forEach(function(row){
-	      		var obj= {};
-			  	row.forEach(function(name,value,ts,ttl){
-				    //all column of row
-				    obj[name]= value;
-				  });
-			  	console.log(obj);
-			});
-			done();
-	      })
-    })
-  })
+ 
 })
 
 describe('update', function () {
