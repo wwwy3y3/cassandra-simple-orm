@@ -111,7 +111,7 @@ describe('Select', function(){
 
     it('should get selected columns where key in, return array', function(done){
       
-      cass.clear().cf("user").get(["name", "thumb"])
+      cass.clear().cf("user").get(["key","name", "thumb"])
       	  .where({key: {in: ["0aacb3b0-c51d-11e2-b9de-1b8643031865", "07e002a0-8e08-11e2-9bcf-033be9f2a618"]}})
       	  .toArray()
       	  .exec(function (err, results) {
