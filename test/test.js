@@ -53,11 +53,11 @@ describe('Select', function(){
       })
     })
 
-    it('should get club apps, return obj', function(done){
+    it('should get club admins, return array', function(done){
       
-      cass.clear().cf("club_apps").get("*")
+      cass.clear().cf("club_admin").getCols("*")
       	  .where({key: "a8d166a0-8e11-11e2-94a1-31a36788c8a5"})
-      	  .toObj()
+      	  .toArray()
       	  .exec(function (err, results) {
       	if(err) throw err;
       	console.log(results);
