@@ -1,6 +1,6 @@
 {
   "name": "cassandra-simple-orm",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "wwwy3y3 <wwwy3y3@gmail.com>",
   "description": "a simple CRUD orm for cassandra helenus",
   "contributors": [
@@ -11,7 +11,8 @@
     "cassandra"
   ],
   "dependencies": {
-    "helenus": "0.6.x"
+    "helenus": "git+ssh://git@github.com:wwwy3y3/helenus.git#master"
+    //"helenus": "0.6.x"
   },
   "devDependencies": {
     "should": "1.2.x"
