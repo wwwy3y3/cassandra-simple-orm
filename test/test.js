@@ -2,12 +2,17 @@ var Cass= require("../index");
 var helenus= require("helenus");
 var uuid= require("node-uuid");
 var should= require("should");
+var async= require("async");
+var cass= new Cass({
+            hosts        : ['localhost:9160'],
+            keyspace     : 'clubond_1_1',
+            timeout      : 3000
+        });
 
 describe('Select', function(){
   describe('#get', function(){
-  	var cass= new Cass();
+  	
     it('should get all user, return a object', function(done){
-      
       cass.cf("user").get("*")
       	  .toObj()
       	  .exec(function (err, results) {
@@ -128,10 +133,9 @@ describe('Select', function(){
 
 describe('update', function () {
 	describe('#update Selected columns where key = ?', function(){
-  	var cass= new Cass();
     it('should update selected columns', function(done){
       
-      cass.cf("user").update({name: "howhow"})
+      cass.clear().cf("user").update({name: "howhow"})
       	  .where({key: "0aacb3b0-c51d-11e2-b9de-1b8643031865"})
       	  .exec(function (err) {
 	      	if(err) throw err;
@@ -149,10 +153,9 @@ describe('update', function () {
 })
 
 describe('#update Selected columns where key = ?', function(){
-  	var cass= new Cass();
     it('should update selected columns', function(done){
       
-      cass.cf("user").update({name: "howhow", email: "123@123.com"})
+      cass.clear().cf("user").update({name: "howhow", email: "123@123.com"})
       	  .where({key: "0aacb3b0-c51d-11e2-b9de-1b8643031865"})
       	  .exec(function (err) {
 	      	if(err) throw err;
@@ -174,10 +177,9 @@ describe('#update Selected columns where key = ?', function(){
 
 describe('insert', function () {
 	describe('#Selected columns where key = ?', function(){
-  	var cass= new Cass();
     it('should insert columns', function(done){
       
-      cass.cf("user").insert({key: "0aacb3b0-c51d-11e2-b9de-1b8643031865",name: "howhow123", email: "123@123.com"})
+      cass.clear().cf("user").insert({key: "0aacb3b0-c51d-11e2-b9de-1b8643031865",name: "howhow123", email: "123@123.com"})
       	  .exec(function (err) {
 	      	if(err) throw err;
 	      	cass.clear().cf("user").get(["email", "name"])
@@ -200,10 +202,9 @@ describe('insert', function () {
 
 describe('delete', function () {
 	describe('#insert an extra, and delete it', function(){
-  	var cass= new Cass();
     it('should delete columns', function(done){
       
-      cass.cf("user").insert({key: "0aacb3b0-c51d-11e2-b9de-1b8643031865", extra: "123123"})
+      cass.clear().cf("user").insert({key: "0aacb3b0-c51d-11e2-b9de-1b8643031865", extra: "123123"})
       	  .exec(function (err) {
 	      	if(err) throw err;
 	      	cass.clear().cf("user").delete(["extra"])
@@ -215,4 +216,25 @@ describe('delete', function () {
     		})
   })
 })
+})
+
+describe('pressure test', function () {
+  it('should Select columns several times', function(done){
+      async.times(100, function (n, next) {
+        cass.clear().cf("user").get("*")
+          .where({account: "li.bear@ymail.com"})
+          .toObj()
+          .exec(function (err, results) {
+            if(err) throw err;
+          })
+
+          //put next callback out of exec, to DDOS cassandra very fast
+          next();
+      }, function (err, arrs) {
+        if(err) throw err;
+
+        done();
+      })
+      
+  })
 })

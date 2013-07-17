@@ -11,8 +11,9 @@
     "cassandra"
   ],
   "dependencies": {
-    "helenus": "git+ssh://git@github.com:wwwy3y3/helenus.git#master"
-    //"helenus": "0.6.x"
+    "helenus": "git+ssh://git@github.com:wwwy3y3/helenus.git#master",
+    "generic-pool": "~2.0.3",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "should": "1.2.x"
