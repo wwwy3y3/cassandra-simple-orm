@@ -36,7 +36,7 @@ describe('Select', function(){
 
     it('should get club members, return array', function(done){
       
-      cass.clear().cf("club_member").getCols("*")
+      cass.clear().cf("club_member").getCols(0,1)
       	  .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
       	  .toArray()
       	  .exec(function (err, results) {
