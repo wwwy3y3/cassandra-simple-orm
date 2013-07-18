@@ -1,6 +1,6 @@
 {
   "name": "cassandra-simple-orm",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "wwwy3y3 <wwwy3y3@gmail.com>",
   "description": "a simple CRUD orm for cassandra helenus",
   "contributors": [
