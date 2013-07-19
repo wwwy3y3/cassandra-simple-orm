@@ -126,6 +126,17 @@ describe('Select', function(){
 	      })
     })
 
+    it('should get sliced rows, return array', function(done){
+      
+      cass.clear().cf("user").getSlice(1,3,["key","name", "thumb"])
+          .toArray()
+          .exec(function (err, results) {
+          if(err) throw err;
+          console.log(results);
+      done();
+        })
+    })
+
   })
 
  
