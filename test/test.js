@@ -128,7 +128,8 @@ describe('Select', function(){
 
     it('should get sliced rows, return array', function(done){
       
-      cass.clear().cf("user").getSlice(1,3,["key","name", "thumb"])
+      cass.clear().cf("user").get(["key","name", "thumb"])
+          .slice(1,3)
           .toArray()
           .exec(function (err, results) {
           if(err) throw err;
