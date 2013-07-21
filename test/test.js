@@ -36,7 +36,7 @@ describe('Select', function(){
 
     it('should get club members, return array', function(done){
       
-      cass.clear().cf("club_member").getCols(0,1)
+      cass.clear().cf("club_member").getCols([0,1])
       	  .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
       	  .toArray()
       	  .exec(function (err, results) {
@@ -138,8 +138,45 @@ describe('Select', function(){
         })
     })
 
-  })
+    it('should get not existing rows, return null', function(done){
+      
+      cass.clear().cf("user").get("*")
+          .where({key: "1231278783"})
+          .toArray()
+          .exec(function (err, results) {
+          if(err) throw err;
+          console.log(results);
+      done();
+        })
+    })
 
+    it('should get not existing rows where in, return null', function(done){
+          
+          cass.clear().cf("club").get("*")
+              .where({key: {in: ["0aacb3b0-c51d-11e2-b9de-1b8643031865", "07e002a0-8e08-11e2-9bcf-033be9f2a618"]}})
+              .toArray()
+              .exec(function (err, results) {
+              if(err) throw err;
+              console.log(results);
+          done();
+            })
+        })
+
+    it('should get not existing rows where index, return null', function(done){
+          
+          cass.clear().cf("club").get("*")
+              .where({url: "unununun"})
+              .toArray()
+              .exec(function (err, results) {
+              if(err) throw err;
+              console.log(results);
+          done();
+            })
+        })
+
+    
+
+      })
  
 })
 
@@ -250,3 +287,4 @@ describe('pressure test', function () {
       
   })
 })
+
