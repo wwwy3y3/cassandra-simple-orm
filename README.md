@@ -23,7 +23,7 @@
 	cass().cf("user").delete(["column name"])
 
 ##要使用where clause 再加上where, 可以用key 或是 second index
-	cass.cf("club").get(["name", "thumb"])
+	cass().cf("club").get(["name", "thumb"])
 	    .where({key: "77229190-c6e9-11e2-adcb-5f2a5769f204"})
 
 ###where有很多用法, 有≥, > , =, ≤, <
