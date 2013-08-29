@@ -8,6 +8,7 @@ cass.config({
             keyspace     : 'clubond_1_1',
             timeout      : 3000
         });
+cass.debug= true;
 
 describe('Select', function(){
   describe('#get', function(){
