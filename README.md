@@ -1,3 +1,4 @@
+# NOTICE! DEPRECATED!
 #install
 	npm install cassandra-simple-orm
 
